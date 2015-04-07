@@ -6,7 +6,7 @@ project(gCovUsage C CXX)
 include(FindPkgConfig)
 # definicion de variables de entorno
 set(CMAKE_CXX_FLAGS "-fprofile-arcs -ftest-coverage ${CMAKE_CXX_FLAGS}")
-set(PROJECT_SRC main.cpp operator.cpp)
+set(PROJECT_SRC main.cpp operator.cpp expression.cpp)
 
 pkg_search_module(CPPUNIT REQUIRED cppunit)
 

@@ -23,19 +23,6 @@ protected:
 	BooleanOperator* right_;
 };
 
-class BooleanExpression {
-	BooleanExpression(const std::string& BooleanExpression);
-
-public:
-	void substitute(const std::string& ArgumentIdentifier, bool Value);
-	bool evaluate();
-	std::string getExpressionAsString()const;
-	friend std::ostream& operator<< (std::ostream& stream, const BooleanExpression& Expression) {
-		stream << Expression.getExpressionAsString();
-		return stream;
-	}	
-};
-
 class BooleanArgument : public BooleanOperator {
 
 public:
