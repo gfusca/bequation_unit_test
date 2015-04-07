@@ -10,7 +10,8 @@ BinaryOperator::~BinaryOperator() {
 	delete right_;
 }
 
-BooleanArgument::BooleanArgument(const std::string& Identifier) : identifier_(Identifier), value_(false) {
+BooleanArgument::BooleanArgument(const std::string& Identifier) :
+											identifier_(Identifier), value_(false) {
 }
 
 bool BooleanArgument::setValue(bool Value) {
@@ -21,7 +22,12 @@ bool BooleanArgument::evaluate() {
 	return value_;
 }
 
-AndOperator::AndOperator(BooleanOperator* Left, BooleanOperator* Right) : BinaryOperator(Left, Right) {
+std::string BooleanArgument::getExpressionAsString()const {
+	return value_ ? "True" : "False";
+}
+
+AndOperator::AndOperator(BooleanOperator* Left, BooleanOperator* Right) :
+																	BinaryOperator(Left, Right) {
 }
 
 bool AndOperator::evaluate() {

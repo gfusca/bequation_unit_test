@@ -42,7 +42,8 @@ public:
 	BooleanArgument(const std::string& Identifier);
 	bool setValue(bool Value);
 	bool evaluate();
-	
+	virtual std::string getExpressionAsString()const;	
+
 private:
 	std::string identifier_;
 	bool value_;
