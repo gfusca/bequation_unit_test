@@ -1,17 +1,20 @@
 #include <iostream>
+#include <string>
+
 /**
  * gCov usage example
- * Boolean expresion evaluator
+ * binary boolean expresion evaluator
  * Usage:
- * bool_eval bool_expression value_1 value_2 ... value_n
+ * bool_eval <bool_expression> <value_1> <value_2> <...> <value_n>
  * @author: Gabriel Fusca
  **/
 
 void print_usage() {
-	std::cout << "usage: eval_ bool_expression value_1 value_2 ... value_n" << std::endl;
+	std::cout << "usage: eval_ <bool_expression> <value_1> <value_2> <...> <value_n>" << std::endl;
 }
+
 int  main(int argc, char** argv) {
-	if (argc <= 1) {
+	if (argc < 3) {
 		print_usage();
 		return 1;
 	}
