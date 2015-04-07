@@ -10,6 +10,6 @@ set(PROJECT_SRC main.cpp)
 
 pkg_search_module(CPPUNIT REQUIRED cppunit)
 
-add_executable(gcov_usage ${PROJECT_SRC})
+add_executable(bool_eval ${PROJECT_SRC})
 
-target_link_libraries(gcov_usage ${CPPUNIT_LIBRARIES})
+target_link_libraries(bool_eval ${CPPUNIT_LIBRARIES})
