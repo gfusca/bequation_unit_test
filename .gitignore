@@ -1,0 +1,6 @@
+bool_eval
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+main.g*
+CMakeFiles/
