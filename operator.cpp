@@ -10,12 +10,18 @@ BinaryOperator::~BinaryOperator() {
 	delete right_;
 }
 
+void BinaryOperator::substitute(const std::string& ArgumentIdentifier, bool Value) {
+	left_->substitute(ArgumentIdentifier, Value);
+	right_->substitute(ArgumentIdentifier, Value);
+}
+
 BooleanArgument::BooleanArgument(const std::string& Identifier) :
 											identifier_(Identifier), value_(false) {
 }
 
-bool BooleanArgument::setValue(bool Value) {
-	value_ = Value;
+void BooleanArgument::substitute(const std::string& ArgumentIdentifier, bool Value) {
+	if (ArgumentIdentifier.compare(identifier_) == 0)
+		value_ = Value;
 }
 
 bool BooleanArgument::evaluate() {
@@ -24,6 +30,10 @@ bool BooleanArgument::evaluate() {
 
 std::string BooleanArgument::getExpressionAsString()const {
 	return value_ ? "True" : "False";
+}
+
+std::string BooleanArgument::getIdentifier()const {
+	return identifier_;
 }
 
 AndOperator::AndOperator(BooleanOperator* Left, BooleanOperator* Right) :
@@ -40,6 +50,10 @@ std::string AndOperator::getExpressionAsString() const {
 	return expression;
 }
 
+std::string AndOperator::getIdentifier()const {
+	return "and";
+}
+
 OrOperator::OrOperator(BooleanOperator* Left, BooleanOperator* Right) : BinaryOperator(Left, Right) {
 }
 
@@ -51,5 +65,9 @@ std::string OrOperator::getExpressionAsString() const {
 	std::string expression;
 	expression = "Or( " + left_->getExpressionAsString() + ", " + right_->getExpressionAsString() + " )";
 	return expression;
+}
+
+std::string OrOperator::getIdentifier()const {
+	return "or";
 }
 
