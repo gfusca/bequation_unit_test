@@ -1,27 +1,40 @@
 #include <string>
 #include "operator.h"
+#include <algorithm>
 
-BinaryOperator::BinaryOperator(BooleanOperator* Left, BooleanOperator* Right) :
-															left_(Left), right_(Right) {
+BooleanOperator* BooleanOperatorFactory::create(const std::string& Identifier) {
+	if (Identifier.compare("AND") == 0)
+		return new AndOperator;
+	if (Identifier.compare("OR") == 0)
+		return new OrOperator;
+	return new BooleanArgument(Identifier);
 }
 
-BinaryOperator::~BinaryOperator() {
-	delete left_;
-	delete right_;
+BooleanLogicOperator::~BooleanLogicOperator() {
+	for (size_t i = 0; i < operators_.size(); ++i)
+		delete operators_[i];
 }
 
-void BinaryOperator::substitute(const std::string& ArgumentIdentifier, bool Value) {
-	left_->substitute(ArgumentIdentifier, Value);
-	right_->substitute(ArgumentIdentifier, Value);
+void BooleanLogicOperator::substitute(const std::string& ArgumentIdentifier, bool Value) {
+	for (size_t i = 0; i < operators_.size(); ++i) {
+		operators_[i]->substitute(ArgumentIdentifier, Value);
+	}
+}
+void BooleanLogicOperator::addOperator(BooleanOperator* Operator) {
+	operators_.push_back(Operator);
 }
 
 BooleanArgument::BooleanArgument(const std::string& Identifier) :
 											identifier_(Identifier), value_(false) {
+	identifier_.erase(std::remove(identifier_.begin(), identifier_.end(), ')'), identifier_.end());
+	identifier_.erase(std::remove(identifier_.begin(), identifier_.end(), '('), identifier_.end());
+	identifier_.erase(std::remove(identifier_.begin(), identifier_.end(), ','), identifier_.end());
 }
 
 void BooleanArgument::substitute(const std::string& ArgumentIdentifier, bool Value) {
-	if (ArgumentIdentifier.compare(identifier_) == 0)
+	if (ArgumentIdentifier.compare(identifier_) == 0) {
 		value_ = Value;
+	}
 }
 
 bool BooleanArgument::evaluate() {
@@ -36,17 +49,24 @@ std::string BooleanArgument::getIdentifier()const {
 	return identifier_;
 }
 
-AndOperator::AndOperator(BooleanOperator* Left, BooleanOperator* Right) :
-																	BinaryOperator(Left, Right) {
+void BooleanArgument::addOperator(BooleanOperator* Operator) {
+	throw InvalidOperatorAssignmentException("Boolean arguments doesnt admit other operators!"); 
 }
 
 bool AndOperator::evaluate() {
-	return left_->evaluate() && right_->evaluate();
+	bool result = true;
+	for (size_t i = 0; i < operators_.size(); ++i)
+		result &= operators_[i]->evaluate();
+	return result;
 
 }
 std::string AndOperator::getExpressionAsString() const {
 	std::string expression;
-	expression = "And( " + left_->getExpressionAsString() + ", " + right_->getExpressionAsString() + " )";
+	expression = "And(";
+	for (size_t i = 0; i < operators_.size(); ++i)
+	 	expression += operators_[i]->getExpressionAsString() + ", ";
+	expression = expression.substr(0, expression.size()-2);
+	expression += ")";
 	return expression;
 }
 
@@ -54,16 +74,20 @@ std::string AndOperator::getIdentifier()const {
 	return "and";
 }
 
-OrOperator::OrOperator(BooleanOperator* Left, BooleanOperator* Right) : BinaryOperator(Left, Right) {
-}
-
 bool OrOperator::evaluate() {
-	return left_->evaluate() || right_->evaluate();
+	bool result = false;
+	for (size_t i = 0; i < operators_.size(); ++i)
+		result |= operators_[i]->evaluate();
+	return result;
 }
 
 std::string OrOperator::getExpressionAsString() const {
 	std::string expression;
-	expression = "Or( " + left_->getExpressionAsString() + ", " + right_->getExpressionAsString() + " )";
+	expression = "Or(";
+	for (size_t i = 0; i < operators_.size(); ++i)
+	 	expression += operators_[i]->getExpressionAsString() + ", ";
+	expression = expression.substr(0, expression.size()-2);
+	expression += ")";
 	return expression;
 }
 

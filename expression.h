@@ -10,7 +10,7 @@ class BooleanExpression {
 	BooleanExpression(const std::string& BooleanExpression);
 
 public:
-	BooleanExpression();
+	explicit BooleanExpression(BooleanOperator* Operator);
 	~BooleanExpression();
 	void substitute(const std::string& ArgumentIdentifier, bool Value);
 	bool evaluate();
@@ -28,7 +28,7 @@ private:
 class ExpressionParseException : std::exception {
 
 public:
-	ExpressionParseException(const std::string& Message) : msg_(Message) {
+	explicit ExpressionParseException(const std::string& Message) : msg_(Message) {
 	}
 	virtual ~ExpressionParseException() throw() {}
 	std::string getMessage() {

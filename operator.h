@@ -1,5 +1,8 @@
 #ifndef __OPERATOR_H__
 #define __OPERATOR_H__
+#include <vector>
+#include <string>
+#include <exception>
 
 class BooleanOperator {
 	BooleanOperator(const BooleanOperator&);
@@ -9,6 +12,7 @@ public:
 	virtual ~BooleanOperator() {}
 	virtual bool evaluate()=0;	
 	virtual std::string getExpressionAsString() const=0;
+	virtual void addOperator(BooleanOperator* Operator)=0;
 	virtual void substitute(const std::string& ArgumentIdentifier, bool Value)=0;
 	virtual std::string getIdentifier()const=0;
 };
@@ -16,20 +20,19 @@ public:
 class BooleanOperatorFactory {
 
 public:
-	static BooleanOperator* Create(std::string& Expression);
+	static BooleanOperator* create(const std::string& Identifier);
 };
 
-class BinaryOperator : public BooleanOperator {
+class BooleanLogicOperator : public BooleanOperator {
 
 public:
-	BinaryOperator(BooleanOperator* Left, BooleanOperator* Right);
-	virtual ~BinaryOperator();
+	virtual ~BooleanLogicOperator();
+	void addOperator(BooleanOperator* Operator);
 	virtual bool evaluate()=0;
 	virtual void substitute(const std::string& ArgumentIdentifier, bool Value);
 
 protected:
-	BooleanOperator* left_;
-	BooleanOperator* right_;
+	std::vector<BooleanOperator*> operators_;
 };
 
 class BooleanArgument : public BooleanOperator {
@@ -40,28 +43,41 @@ public:
 	virtual std::string getExpressionAsString() const;	
 	virtual std::string getIdentifier() const;
 	virtual void substitute(const std::string& ArgumentIdentifier, bool Value);
+	virtual void addOperator(BooleanOperator* Operator);
 
 private:
 	std::string identifier_;
 	bool value_;
 };
 
-class AndOperator : public BinaryOperator {
+class AndOperator : public BooleanLogicOperator {
 public:
-	AndOperator(BooleanOperator* Left, BooleanOperator* Right);
 	~AndOperator() {}
 	bool evaluate();
 	virtual std::string getExpressionAsString() const;
 	virtual std::string getIdentifier()const;
 };
 
-class OrOperator : public BinaryOperator {
+class OrOperator : public BooleanLogicOperator {
 public:
-	OrOperator(BooleanOperator* Left, BooleanOperator* Right);
 	~OrOperator() {}
 	bool evaluate();
 	virtual std::string getExpressionAsString() const;
 	virtual std::string getIdentifier()const;
+};
+
+class InvalidOperatorAssignmentException : std::exception {
+
+public:
+	InvalidOperatorAssignmentException(const std::string& Message) : msg_(Message) {
+	}
+	virtual ~InvalidOperatorAssignmentException() throw() {}
+	std::string getMessage() {
+		return msg_;
+	}
+
+protected:
+	std::string msg_;
 };
 
 #endif	// __OPERATOR_H__

@@ -2,7 +2,7 @@
 #include "expression.h"
 #include "operator.h"
 
-BooleanExpression::BooleanExpression() : operator_(NULL) {
+BooleanExpression::BooleanExpression(BooleanOperator* Operator) : operator_(Operator) {
 }
 
 BooleanExpression::~BooleanExpression() {
