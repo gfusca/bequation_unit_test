@@ -2,6 +2,13 @@
 #include "operator.h"
 #include <algorithm>
 
+
+void clean_identifier(std::string& Identifier) {
+	Identifier.erase(std::remove(Identifier.begin(), Identifier.end(), ')'), Identifier.end());
+	Identifier.erase(std::remove(Identifier.begin(), Identifier.end(), '('), Identifier.end());
+	Identifier.erase(std::remove(Identifier.begin(), Identifier.end(), ','), Identifier.end());
+}
+
 BooleanOperator* BooleanOperatorFactory::create(const std::string& Identifier) {
 	if (Identifier.compare("AND") == 0)
 		return new AndOperator;
@@ -26,9 +33,7 @@ void BooleanLogicOperator::addOperator(BooleanOperator* Operator) {
 
 BooleanArgument::BooleanArgument(const std::string& Identifier) :
 											identifier_(Identifier), value_(false) {
-	identifier_.erase(std::remove(identifier_.begin(), identifier_.end(), ')'), identifier_.end());
-	identifier_.erase(std::remove(identifier_.begin(), identifier_.end(), '('), identifier_.end());
-	identifier_.erase(std::remove(identifier_.begin(), identifier_.end(), ','), identifier_.end());
+	clean_identifier(identifier_);
 }
 
 void BooleanArgument::substitute(const std::string& ArgumentIdentifier, bool Value) {
