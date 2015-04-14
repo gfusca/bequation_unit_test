@@ -1,49 +1,51 @@
 #include <string>
+#include <gtest/gtest.h>
 
+#include "expressionparser.h"
 #include "expressiontest.h"
 #include "expression.h"
 	
 ExpressionTest::ExpressionTest() {
-	TEST_ADD(ExpressionTest::testExpressionParse)
-	TEST_ADD(ExpressionTest::testExpressionAsString)
-	TEST_ADD(ExpressionTest::testSimpleArgumentExpressionEvaluation)
 }
 
-void ExpressionTest::setup() {
+void ExpressionTest::SetUp() {
 }
-void ExpressionTest::tear_down() {
+void ExpressionTest::TearDown() {
 }
 
 void ExpressionTest::testExpressionParse() {
 	std::string expressionstr = "AND(a,b)";
 	try {
-		BooleanExpression* expression = BooleanExpression::Create(expressionstr);
+		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
 		delete expression;
+		ASSERT_TRUE(true);
 	} catch (ExpressionParseException& e) {
-		TEST_FAIL("Parse Error") 
+		//TEST_FAIL("Parse Error") 
+		ASSERT_TRUE(false);
 	}
 }
 
 void ExpressionTest::testExpressionAsString() {
 	try {
 		std::string expressionstr = "AND(a,b)";
-		BooleanExpression* expression = BooleanExpression::Create(expressionstr);
-		TEST_ASSERT(expression->getExpressionAsString().compare(expressionstr) == 0)
+		std::string expression_expected = "And(False, False)";
+		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
+		EXPECT_STREQ(expression->getExpressionAsString().c_str(), expression_expected.c_str());
 		delete expression;
 	} catch (...) {
-		TEST_FAIL("Fail!")
+		ASSERT_TRUE(false);
 	}
 }
 
 void ExpressionTest::testSimpleArgumentExpressionEvaluation() {
 	try {
 		std::string expressionstr = "A";
-		BooleanExpression* expression = BooleanExpression::Create(expressionstr);
+		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
 		expression->substitute(expressionstr, true);
-		TEST_ASSERT(expression->evaluate() == true)
+		ASSERT_TRUE(expression->evaluate() == true);
 		delete expression;
 	} catch (...) {
-		TEST_FAIL("Fail!")
+		ASSERT_TRUE(false);
 	}
 }
 

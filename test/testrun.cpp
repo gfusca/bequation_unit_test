@@ -1,7 +1,10 @@
-#include "expressiontest.h"
+// #include "expressiontest.h"
+#include <gtest/gtest.h>
 
 int main(int argc, char** argv) {
-   ExpressionTest sts;
-   Test::TextOutput output(Test::TextOutput::Verbose);
-   return sts.run(output, false);
+   //ExpressionTest sts;
+   //Test::TextOutput output(Test::TextOutput::Verbose);
+   //return sts.run(output, false);
+	testing::InitGoogleTest(&argc, argv);
+  	return RUN_ALL_TESTS();	
 }
