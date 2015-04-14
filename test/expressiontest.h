@@ -10,7 +10,13 @@ public:
 	void testExpressionParse();
 	void testExpressionAsString();
 	void testSimpleArgumentExpressionEvaluation();
+	void testCaseInsensitiveParser();
+	void testParserWithSpaces();
+	void testTrueNestedEquation();
+	void testFalseNestedEquation();
+	// Method required
 	void TestBody() {}
+
 protected:
 	virtual void SetUp();
 	virtual void TearDown();
@@ -33,4 +39,26 @@ TEST_F(ExpressionTest, SimpleArgumentExpressionEvalTest) {
 	ExpressionTest tester;
 	tester.testSimpleArgumentExpressionEvaluation();
 }
+
+/** Test definitions **/
+TEST_F(ExpressionTest, CaseInsensitiveParserTest) {
+	ExpressionTest tester;
+	tester.testCaseInsensitiveParser();
+}
+
+TEST_F(ExpressionTest, ParserWithSpacesTest) {
+	ExpressionTest tester;
+	tester.testParserWithSpaces();
+}
+
+TEST_F(ExpressionTest, TrueNestedEquationTest) {
+	ExpressionTest tester;
+	tester.testTrueNestedEquation();
+}
+
+TEST_F(ExpressionTest, FalseNestedEquationTest) {
+	ExpressionTest tester;
+	tester.testFalseNestedEquation();
+}
+
 #endif
