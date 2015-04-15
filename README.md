@@ -7,7 +7,7 @@ Example
 
 Execution:
 
-$ bool_eval "AND(AND(x,y),OR(c,d),OR(e,f))" "x=True" "y=True" "c=False" "d=True" "e=False" "f=True"
+`./bool_eval "AND(AND(x,y),OR(c,d),OR(e,f))" "x=True" "y=True" "c=False" "d=True" "e=False" "f=True"`
 
 Result:
-Expression: And(And(True, True), Or(False, True), Or(False, True))=1
+`Expression: And(And(True, True), Or(False, True), Or(False, True))=1`
