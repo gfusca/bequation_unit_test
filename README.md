@@ -1,5 +1,5 @@
 # Unit Test Boolean Equation Example
-Unit test example based on boolean equation parser using c++, GTest and GMock
+Unit test example based on a boolean equation parser using c++, GTest and GMock
 
 ## Compilation
 1. cmake .
