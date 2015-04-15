@@ -1,4 +1,4 @@
-# bequation_unit_test
+# Unit Test Boolean Equation Example
 Unit test example based on boolean equation parser using GTest and GMock
 
 ## Usage
