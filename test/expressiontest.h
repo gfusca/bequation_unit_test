@@ -1,6 +1,5 @@
 #ifndef __EXPRESSION_TEST_H__
 #define __EXPRESSION_TEST_H__
-#include <cpptest.h>
 #include <gtest/gtest.h>
 #include "expressionparser.h"
 
