@@ -2,6 +2,7 @@
 #define __EXPRESSION_TEST_H__
 #include <cpptest.h>
 #include <gtest/gtest.h>
+#include "expressionparser.h"
 
 class ExpressionTest : public testing::Test {
 
@@ -21,6 +22,7 @@ public:
 protected:
 	virtual void SetUp();
 	virtual void TearDown();
+	ExpressionParser parser_;
 };
 
 /** Test definitions **/

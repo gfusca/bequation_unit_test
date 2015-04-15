@@ -12,13 +12,14 @@ ExpressionTest::ExpressionTest() {
 
 void ExpressionTest::SetUp() {
 }
+
 void ExpressionTest::TearDown() {
 }
 
 void ExpressionTest::testExpressionParse() {
 	std::string expressionstr = "AND(a,b)";
 	try {
-		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
+		BooleanExpression* expression = parser_.parse(expressionstr);
 		delete expression;
 		ASSERT_TRUE(true);
 	} catch (ExpressionParseException& e) {
@@ -31,7 +32,7 @@ void ExpressionTest::testExpressionAsString() {
 	try {
 		std::string expressionstr = "AND(a,b)";
 		std::string expression_expected = "And(False, False)";
-		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
+		BooleanExpression* expression = parser_.parse(expressionstr);
 		EXPECT_STREQ(expression->getExpressionAsString().c_str(), expression_expected.c_str());
 		delete expression;
 	} catch (...) {
@@ -42,7 +43,7 @@ void ExpressionTest::testExpressionAsString() {
 void ExpressionTest::testSimpleArgumentExpressionEvaluation() {
 	try {
 		std::string expressionstr = "A";
-		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
+		BooleanExpression* expression = parser_.parse(expressionstr);
 		expression->substitute(expressionstr, true);
 		ASSERT_TRUE(expression->evaluate() == true);
 		delete expression;
@@ -55,7 +56,7 @@ void ExpressionTest::testCaseInsensitiveParser() {
 #ifdef RUN_FAIL_TEST
 	try {
 		std::string expressionstr = "and(a,b)";
-		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
+		BooleanExpression* expression = parser_.parse(expressionstr);
 		delete expression;
 		ASSERT_TRUE(true);
 	} catch (...) {
@@ -68,7 +69,7 @@ void ExpressionTest::testParserWithSpaces() {
 #ifdef RUN_FAIL_TEST
 	try {
 		std::string expressionstr = "and(a, b)";
-		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
+		BooleanExpression* expression = parser_.parse(expressionstr);
 		delete expression;
 		ASSERT_TRUE(true);
 	} catch (...) {
@@ -80,7 +81,7 @@ void ExpressionTest::testParserWithSpaces() {
 void ExpressionTest::testTrueNestedEquation() {
 	try {
 		std::string expressionstr = "AND(AND(x,y),OR(b,c))";
-		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
+		BooleanExpression* expression = parser_.parse(expressionstr);
 		expression->substitute("x", true);
 		expression->substitute("y", true);
 		expression->substitute("c", true);
@@ -95,7 +96,7 @@ void ExpressionTest::testTrueNestedEquation() {
 void ExpressionTest::testFalseNestedEquation() {
 	try {
 		std::string expressionstr = "AND(AND(x,y),OR(b,c))";
-		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
+		BooleanExpression* expression = parser_.parse(expressionstr);
 		expression->substitute("x", true);
 		expression->substitute("y", true);
 		expression->substitute("c", false);
@@ -112,7 +113,7 @@ void ExpressionTest::testNestedParenthesisParse() {
 #ifdef RUN_FAIL_TEST
 	try {
 		std::string expressionstr = "AND(OR(AND(x,y), OR(a,b)),OR(b,c))";
-		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
+		BooleanExpression* expression = parser_.parse(expressionstr);
 		expression->substitute("x", true);
 		expression->substitute("y", true);
 		expression->substitute("c", false);
