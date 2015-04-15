@@ -21,7 +21,8 @@ int  main(int argc, char** argv) {
 		return 1;
 	}
 	try {
-		BooleanExpression* expression = ExpressionParser::parse(argv[1]);
+		ExpressionParser parser;
+		BooleanExpression* expression = parser.parse(argv[1]);
 		for (int i = 2; i < argc; ++i) {
 			std::string option = std::string(argv[i]);
 			std::string identifier = option.substr(0, option.find("="));

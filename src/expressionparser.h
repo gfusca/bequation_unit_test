@@ -8,6 +8,6 @@ class BooleanExpression;
 class ExpressionParser {
 
 public:
-	static BooleanExpression* parse(const std::string& Expression);
+	BooleanExpression* parse(const std::string& Expression);
 };
 #endif
