@@ -15,6 +15,12 @@ TEST(MockTestCase, MockTestString) {
 	EXPECT_STREQ(eq.c_str(), expression.getExpressionAsString().c_str());
 }
 
+TEST(MockTestCase, MockTestEvaluation) {
+	MockOperator *op = new MockOperator;
+	MockExpression expression(op);
+	EXPECT_CALL(expression, evaluate()).WillOnce(Return(true));
+	EXPECT_EQ(true, expression.evaluate());
+}
 
 int main(int argc, char** argv) {
 	testing::InitGoogleTest(&argc, argv);
