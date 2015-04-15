@@ -84,7 +84,7 @@ void ExpressionTest::testTrueNestedEquation() {
 		expression->substitute("x", true);
 		expression->substitute("y", true);
 		expression->substitute("c", true);
-		ASSERT_TRUE(expression->evaluate() == true);
+		EXPECT_TRUE(expression->evaluate() == true);
 		delete expression;
 	} catch (...) {
 		ASSERT_TRUE(false);
@@ -100,10 +100,29 @@ void ExpressionTest::testFalseNestedEquation() {
 		expression->substitute("y", true);
 		expression->substitute("c", false);
 		expression->substitute("b", false);
-		ASSERT_TRUE(expression->evaluate() == false);
+		EXPECT_TRUE(expression->evaluate() == false);
 		delete expression;
 	} catch (...) {
 		ASSERT_TRUE(false);
 	}
 
 }
+
+void ExpressionTest::testNestedParenthesisParse() {
+#ifdef RUN_FAIL_TEST
+	try {
+		std::string expressionstr = "AND(OR(AND(x,y), OR(a,b)),OR(b,c))";
+		BooleanExpression* expression = ExpressionParser::parse(expressionstr);
+		expression->substitute("x", true);
+		expression->substitute("y", true);
+		expression->substitute("c", false);
+		expression->substitute("b", false);
+		std::cout << *expression << std::endl;
+		EXPECT_TRUE(expression->evaluate() == false);
+		delete expression;
+	} catch (...) {
+		ASSERT_TRUE(false);
+	}
+#endif
+}
+

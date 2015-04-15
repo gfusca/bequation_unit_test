@@ -14,6 +14,7 @@ public:
 	void testParserWithSpaces();
 	void testTrueNestedEquation();
 	void testFalseNestedEquation();
+	void testNestedParenthesisParse();
 	// Method required
 	void TestBody() {}
 
@@ -61,4 +62,8 @@ TEST_F(ExpressionTest, FalseNestedEquationTest) {
 	tester.testFalseNestedEquation();
 }
 
+TEST_F(ExpressionTest, TestNestedParenthesis) {
+	ExpressionTest tester;
+	tester.testNestedParenthesisParse();
+}
 #endif
