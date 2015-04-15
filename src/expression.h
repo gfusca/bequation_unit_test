@@ -11,10 +11,10 @@ class BooleanExpression {
 
 public:
 	explicit BooleanExpression(BooleanOperator* Operator);
-	~BooleanExpression();
-	void substitute(const std::string& ArgumentIdentifier, bool Value);
-	bool evaluate();
-	std::string getExpressionAsString()const;
+	virtual ~BooleanExpression();
+	virtual void substitute(const std::string& ArgumentIdentifier, bool Value);
+	virtual bool evaluate();
+	virtual std::string getExpressionAsString()const;
 	friend std::ostream& operator<< (std::ostream& stream, const BooleanExpression& Expression) {
 		stream << Expression.getExpressionAsString();
 		return stream;
