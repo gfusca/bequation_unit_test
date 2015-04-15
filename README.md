@@ -1,5 +1,10 @@
 # Unit Test Boolean Equation Example
-Unit test example based on boolean equation parser using GTest and GMock
+Unit test example based on boolean equation parser using c++, GTest and GMock
+
+## Compilation
+1. cmake .
+2. make
+
 
 ## Usage
 
@@ -14,3 +19,13 @@ Execution:
 Result:
 
 `Expression: And(And(True, True), Or(False, True), Or(False, True))=1`
+
+## Test run
+
+Run test cases:
+
+For running the test cases do `ctest .` or `make test`
+
+Verbose visualization:
+
+`ctest -VV`
