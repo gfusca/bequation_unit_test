@@ -5,7 +5,7 @@
 #include "expressiontest.h"
 #include "expression.h"
 
-// #define RUN_FAIL_TEST
+#define RUN_FAIL_TEST
 	
 ExpressionTest::ExpressionTest() {
 }
